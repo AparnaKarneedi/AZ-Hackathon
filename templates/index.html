@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cross Coding Platform</title>
+        
+        
+        <link rel="stylesheet"  type="text/css" href="{{url_for('static', filename='style.css')}}">
+        <link rel="shortcut icon"   href="{{url_for('static', filename='favicon.ico')}}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+      <div class="loader">
+        <div></div>
+    </div>
+      <div class="content">
+      <div class="title-name"><span class="az">AZ</span> Cross Coding Platform</div>
+        <div class="form">
+          <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.search.label }}
+            {{ form.search() }}
+            {{ form.submit() }}
+          </form>
+        </div>
+        <div class="platforms">
+          <div class="title-name platform-name">Codeforces</div>
+          <div class="title-name platform-name">Spoj</div>
+          <div class="title-name platform-name">Leet Code</div>
+          
+        </div>
+        {% if(results.length != 0 or results_codeforces.length!=0 or results_spoj!=0) %}
+         <div class="results-div">
+         <div class = "results">
+          {% for result in results %}
+           {% if result.length != 0 %}
+            {% if result['Question Link'][0:30] == 'https://leetcode.com/problems/' %}
+            <div class="div-leetcode">
+            <a href="{{result['Question Link']}}" target="_blank"><div class="result result-leetcode">{{result['Question Link'][30:][:-2]}}<span class="tag">LEETCODE</span></div></a>
+            
+            </div>
+            {% endif %}
+           {% endif %}
+           
+           
+           
+          {% endfor %}
+          {% for result in results_codeforces %}
+          {% for qname in qnames_codeforces %}
+           {% if result.length != 0 %}
+           <div class="div-codeforces">
+           <a href="{{result['Question Link']}}" class="result_codeforces" target="_blank"><div class="result" >{{qname['Question Link']}}<span class="tag">CODEFORCES</span></div></a>
+           
+          </div>
+          {% endif %}
+         
+          
+          {% endfor %}
+         {% endfor %}
+        
+         {% for result in results_spoj %}
+          {% for qname in qnames_spoj %}
+           {% if result.length != 0 %}
+           <div class="div-spoj">
+           <a href="{{result['Question Link']}}" class="result_spoj" target="_blank"><div class="result" >{{qname['Question Link']}}<span class="tag">SPOJ</span></div></a>
+           
+          </div>
+          {% endif %}
+          
+         
+          {% endfor %}
+         {% endfor %}
+        </div>
+        </div>
+        {% endif %}
+      </div>
+      <footer class="footer-main">
+        Designed by Shanmukha Sahith 😎
+      </footer>
+        
+     
+        
+        <script type="text/javascript" src="{{ url_for('static', filename = 'index.js') }}"></script>
+        <script>
+          $(window).on('load',function(){
+              $(".loader").fadeOut(1000);
+              $(".content").fadeIn(1300);
+              $(".tag").fadeIn(1300);
+          });
+      </script>
+      </body>
+</html>
